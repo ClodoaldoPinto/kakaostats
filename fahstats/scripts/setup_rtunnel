@@ -1,0 +1,5 @@
+#!/bin/bash
+while true;
+do
+ssh ck -nNCTR 5433:localhost:5432 -o "ServerAliveInterval 10"
+done

@@ -1,0 +1,33 @@
+<?php
+
+?>
+<p style="text-align:center;margin-top:1em;">
+<?php
+
+$country_code = apache_note("GEOIP_COUNTRY_CODE");
+#$country_code = 'GB';
+
+$rand = mt_rand(1, 100);
+
+if (False && $country_code == "US") {
+  if ($rand < 0) echo '<a href="http://carconsumption.com">American Cars Fuel Economy Browser</a>';
+  elseif ($rand <= 66) include './banner/crucial_banner_468x60.html';
+  else include './banner/rackmounted_banner.html';
+}
+elseif (False && $country_code == "GB") {
+  if ($rand < 0) echo '<a href="http://carconsumption.com">American Cars Fuel Economy Browser</a>';
+  elseif ($rand <= 66) include './banner/crucial_uk_banner_728x90.html';
+  else include './banner/rackmounted_banner.html';
+}
+elseif (False) {
+  if ($rand < 0) echo '<a href="http://carconsumption.com">American Cars Fuel Economy Browser</a>';
+  elseif ($rand <= 33) include './banner/dreamhost_banner.html';
+  elseif ($rand <= 66) include './banner/dreamhost_banner_foot.html';
+  else include './banner/rackmounted_banner.html';
+}
+else {
+   include './script/adsense_bottom.js';
+}
+?>
+</p>
+

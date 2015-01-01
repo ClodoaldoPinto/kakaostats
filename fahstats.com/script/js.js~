@@ -1,0 +1,141 @@
+function ron(id) {
+	ruleLineColor = id.style.backgroundColor;
+	id.style.backgroundColor = "BlanchedAlmond";
+	return;
+	}
+function roff(id) {
+	id.style.backgroundColor = ruleLineColor;
+	return;
+	}
+// enable scrolling for overflow:auto elements in Mozilla
+function scrollMe(event) {
+	var st = event.currentTarget.scrollTop + (event.detail * 12);
+	event.currentTarget.scrollTop = st < 0 ? 0 : st;
+	event.preventDefault();
+	}
+function roll() {
+	if (document.body.addEventListener) {
+		var divs = document.getElementsByTagName('tbody');
+		for (var d in divs) {
+			if (divs[d].className && divs[d].className == 'tcorpo') {
+			        try {
+					divs[d].addEventListener('DOMMouseScroll', scrollMe, false);
+			        	}
+				catch (ex) {}
+				}
+			}
+		}
+	}
+function mOverCab(cab) {
+	tira_cor();
+	cab.style.backgroundColor="LemonChiffon";
+	cab.style.cursor="hand";
+	}
+function mOutCab(cab) {
+	coloca_cor();
+	if (cab.id.substring(2, cab.id.length) != th_classificado) cab.style.backgroundColor="";
+	cab.style.cursor="";
+	}
+function tira_cor() {
+	document.getElementById( "th" + th_classificado ).style.backgroundColor="";
+	}
+function coloca_cor() {
+	document.getElementById( "th" + th_classificado ).style.backgroundColor="LemonChiffon";
+	}
+function ordemDesc( a, b ) {
+	var n1 = a.substring( 0, a.indexOf( "\x00" ) ).replace( /\,/g, "" );
+	var n2 = b.substring( 0, b.indexOf( "\x00" ) ).replace( /\,/g, "" );
+	return n2 - n1;
+	}
+function ordemAsc( a, b ) {
+	var n1 = a.substring( 0, a.indexOf( "\x00" ) ).replace( /\,/g, "" );
+	var n2 = b.substring( 0, b.indexOf( "\x00" ) ).replace( /\,/g, "" );
+	return n1 - n2;
+	}
+function ordemAlfaDesc(a, b) {
+	var n1 = a.substring( 0, a.indexOf( "\x00" ) );
+	var n2 = b.substring( 0, b.indexOf( "\x00" ) );
+	if(n1.toLowerCase() > n2.toLowerCase()) return -1;
+	if(n1.toLowerCase() < n2.toLowerCase()) return 1;
+	return 0;
+	}
+function ordemAlfaAsc(a, b) {
+	var n1 = a.substring( 0, a.indexOf( "\x00" ) );
+	var n2 = b.substring( 0, b.indexOf( "\x00" ) );
+	if(n1.toLowerCase() < n2.toLowerCase()) return -1;
+	if(n1.toLowerCase() > n2.toLowerCase()) return 1;
+	return 0;
+	}
+function ordena(coluna, tipo, ordem, cId) {
+	tira_cor();
+	th_classificado = coluna;
+	var celula;
+	var criterio = new Array();
+	var tbody = document.getElementById( "tdados" );
+	var linhas = tbody.getElementsByTagName( "tr" );
+	for ( var i = 0; i < linhas.length; i++ ) {
+		celula = linhas[i].getElementsByTagName( "td" )[coluna];
+		if ( celula.getElementsByTagName( "a" ).length > 0 ) celula = celula.getElementsByTagName( "a" )[0];
+		if ( celula.firstChild.nodeType == 3 ) {
+			criterio[i] = celula.firstChild.data + "\x00" + linhas[i].id;
+			}
+		}
+	if ( tipo == "a" ) {
+		if ( ordem == "asc" ) criterio = criterio.sort( ordemAlfaAsc );
+		else criterio = criterio.sort( ordemAlfaDesc );
+		}
+	else {
+		if ( ordem == "asc" ) criterio = criterio.sort( ordemAsc );
+		else criterio = criterio.sort( ordemDesc );
+		}
+	var amover;
+	var id;
+	for ( i = 0; i < linhas.length; i++ ) {
+		id = criterio[i].substring( criterio[i].indexOf("\x00") + 1, criterio[i].length );
+		amover = document.getElementById( id );
+		tbody.insertBefore( amover, linhas[i] );
+		}
+	for ( i = 0; i < linhas.length; i++ ) {
+		if ( ( i + 1 ) % 2 == 0 ) linhas[i].className = "ls";
+		else linhas[i].className = "";
+		linhas[i].getElementsByTagName("td")[0].firstChild.data = i + 1;
+		}
+	coloca_cor();
+	}
+function zd(numero) {
+	return (numero<10 ? "0" + numero : numero);
+	}
+function timeZone() {
+	var data = new Date();
+	var timeZone = data.getTimezoneOffset() / 60;
+	if (timeZone > 0) var sinalTimeZone = "-";
+	else if (timeZone < 0) var sinalTimeZone = "+";
+	else var sinalTimeZone = "";
+	return ("UTC" + sinalTimeZone + timeZone);
+	}
+function wDate(date) {
+  var year = date.substring (0, 4);
+  var month = date.substring (5, 7);
+  var day = date.substring (8, 10);
+  var hour = date.substring (11, 13);
+  var minute = date.substring (14, 16);
+	var data = new Date(Date.UTC(year, month -1, day, hour, minute));
+	return (
+		data.getHours() + ":" + 
+		zd(data.getMinutes()) + " " +
+		data.getFullYear() + "-" + 
+		zd(data.getMonth() +1) + "-" +
+		zd(data.getDate())
+		);
+	}
+function wDate2(aData) {
+	aData = String(aData).split(":");
+	var data = new Date(Date.UTC(aData[0], aData[1] -1, aData[2], aData[3], aData[4]));
+	return (
+		data.getFullYear() + "-" + 
+		zd(data.getMonth() +1) + "-" +
+		zd(data.getDate()) + " " +
+		zd(data.getHours()) + ":" + 
+		zd(data.getMinutes())
+		);
+	}

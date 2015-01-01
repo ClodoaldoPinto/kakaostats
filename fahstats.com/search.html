@@ -1,0 +1,16 @@
+<form name="search" action="" style="margin-top:0.5em;"
+  onsubmit="load(<?php echo $col ?>);return false;">
+<div>
+<?php echo $search_box_text ?> name contain:
+  <input type="text" id="search_text" size="20" maxlength="30"
+  value="<?php echo htmlentities(utf8_decode($search_text)) ?>"
+  style="background:floralwhite;">
+<input type="submit" name="search_button" value="Search"
+  style="background:gainsboro;">
+<input type="button" value="Clear"
+  style="background:gainsboro;" onclick="
+  document.getElementById('search_text').value = '';
+  document.getElementById('search_text').focus();
+  ">
+</div>
+</form>
